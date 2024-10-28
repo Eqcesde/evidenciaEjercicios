@@ -46,3 +46,21 @@ function calcularImpuesto(ingreso) {
 function mostrarImpuesto(nombre, ingreso, impuesto) {
     alert(`Empleado: ${nombre}\nIngreso mensual: $${ingreso.toFixed(2)}\nImpuesto calculado: $${impuesto.toFixed(2)}`);
 }
+
+// Programa principal 
+let continuar = true;
+while (continuar) {
+    let empleado = iniciarSesion();
+    
+    if (empleado) {
+        let calcular = true;
+        
+        while (calcular) {
+            let ingreso = capturarIngresoEmpleado(empleado.nombre);
+            let impuesto = calcularImpuesto(ingreso);
+            mostrarImpuesto(empleado.nombre, ingreso, impuesto);
+            
+            calcular = confirm(`¿${empleado.nombre}, desea calcular el impuesto para otro ingreso?`);
+        }
+    }
+}
