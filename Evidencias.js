@@ -1,34 +1,36 @@
-// variable de usuarios y contraseñas
+// Datos de usuarios y contraseñas predefinidos
 const empleados = [
-  { usuario: "admin", contrasena: "1234", nombre: "Administrador" },
-  { usuario: "empleado1", contrasena: "5678", nombre: "Enderson Quiroz" },
-  { usuario: "empleado2", contrasena: "9123", nombre: "Jaime Zapata" },
+    { usuario: "admin", contrasena: "1234", nombre: "Administrador" },
+    { usuario: "empleado1", contrasena: "5678", nombre: "Enderson Quiroz" },
+    { usuario: "empleado2", contrasena: "9123", nombre: "Jaime zapata" }
 ];
 
-// Función para iniciar sesión
+// Función para iniciar sesión de un empleado
 function iniciarSesion() {
-  let intentos = 3;
-  while (intentos > 0) {
-    let usuario = prompt("Ingrese El Usuario:");
-    let contrasena = prompt("Ingrese La Contraseña:");
+    let intentos = 3;
+    while (intentos > 0) {
+        let usuario = prompt("Ingrese el usuario:");
+        let contrasena = prompt("Ingrese la contraseña:");
 
-    // variable para Buscar el empleado con usuario y contraseña
-    const empleado = empleados.find(
-      (emp) => emp.usuario === usuario && emp.contrasena === contrasena
-    );
+        // Buscar el empleado por el usuario y contraseña
+        const empleado = empleados.find(emp => emp.usuario === usuario && emp.contrasena === contrasena);
 
-    if (empleado) {
-      alert(`Bienvenido(a), ${empleado.nombre}`);
-      return empleado;
-    } else {
-      intentos--;
-      alert(
-        `Usuario o contraseña incorrectos. Intentos restantes: ${intentos}`
-      );
+        if (empleado) {
+            alert(`Bienvenido(a), ${empleado.nombre}`);
+            return empleado;
+        } else {
+            intentos--;
+            alert(`Usuario o contraseña incorrectos. Intentos restantes: ${intentos}`);
+        }
     }
-  }
-  alert("Demasiados intentos fallidos. El sistema se cerrará.");
-  return null;
+    alert("Demasiados intentos fallidos. El sistema se cerrará.");
+    return null;
+}
+
+// Función para capturar el ingreso mensual del empleado
+function capturarIngresoEmpleado(nombre) {
+    let ingreso = parseFloat(prompt(`Ingrese el ingreso mensual de ${nombre}:`));
+    return ingreso;
 }
 
 // Función para calcular el impuesto según el ingreso mensual
@@ -47,7 +49,7 @@ function mostrarImpuesto(nombre, ingreso, impuesto) {
     alert(`Empleado: ${nombre}\nIngreso mensual: $${ingreso.toFixed(2)}\nImpuesto calculado: $${impuesto.toFixed(2)}`);
 }
 
-// Programa principal 
+// Programa principal
 let continuar = true;
 while (continuar) {
     let empleado = iniciarSesion();
@@ -62,5 +64,10 @@ while (continuar) {
             
             calcular = confirm(`¿${empleado.nombre}, desea calcular el impuesto para otro ingreso?`);
         }
+        
+        continuar = confirm("¿Desea cerrar sesión e iniciar sesión con otro usuario?");
+    } else {
+        continuar = false; // Salir del sistema si el inicio de sesión falla
     }
 }
+alert("Gracias por usar el sistema de cálculo de impuestos.");
